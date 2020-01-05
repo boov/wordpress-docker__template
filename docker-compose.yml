@@ -1,4 +1,4 @@
-version: '3.3'
+version: "3.3"
 
 services:
   wordpress:
@@ -24,7 +24,7 @@ services:
   mysql:
     image: mysql:latest
     ports:
-      - ${IP}:3306:3306
+      - ${IP}:4001:3306
     volumes:
       - ./init:/docker-entrypoint-initdb.d
       - mysql_data:/var/lib/mysql
@@ -32,16 +32,17 @@ services:
     environment:
       MYSQL_DATABASE: "${DB_NAME}"
       MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
-    command: [
-      '--character-set-server=utf8mb4',
-      '--collation-server=utf8mb4_unicode_ci',
-      '--default_authentication_plugin=mysql_native_password'
-    ]
+    command:
+      [
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_unicode_ci",
+        "--default_authentication_plugin=mysql_native_password",
+      ]
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     ports:
-      - ${IP}:4001:80
+      - ${IP}:4002:80
     restart: always
     environment:
       PMA_HOST: mysql
